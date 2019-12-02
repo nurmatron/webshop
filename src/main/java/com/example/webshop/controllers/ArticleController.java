@@ -23,7 +23,7 @@ public class ArticleController {
 
     // read 1
     @GetMapping
-    @RequestMapping(path = "{id}")
+    @RequestMapping(path = "get/{id}")
     public Article getOneArticle(@PathVariable Integer id) {
         return articleRepository.getOne(id);
     }
@@ -36,7 +36,7 @@ public class ArticleController {
 
     // update
     @PutMapping
-    @RequestMapping(path = "{id}")
+    @RequestMapping(path = "update/{id}")
     public Article updateArticle(@PathVariable Integer id, @RequestBody Article article) {
         //TODO  add validation for each field.
         Article existingArticle = articleRepository.getOne(id);
@@ -45,7 +45,7 @@ public class ArticleController {
     }
     // delete
     @DeleteMapping
-    @RequestMapping(path = "{id}")
+    @RequestMapping(path = "delete/{id}")
     public void  deleteOneArticle(@PathVariable Integer id){
         articleRepository.deleteById(id);
     }
