@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="orderlines")
-public class Orderline {
+public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -13,9 +13,9 @@ public class Orderline {
     @ManyToOne
     private Order order;
     private int quantity;
-     public Orderline() {}
+     public OrderLine() {}
 
-    public Orderline(Article article, Order order, int quantity) {
+    public OrderLine(Article article, Order order, int quantity) {
         this.article = article;
         this.order = order;
         this.quantity = quantity;

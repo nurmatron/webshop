@@ -1,9 +1,6 @@
 package com.example.webshop.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -14,7 +11,7 @@ public class Article {
     private String name;
 
     @OneToOne(mappedBy = "article")
-    private Orderline orderline;
+    private OrderLine orderline;
 
     public Article() {
 
@@ -36,11 +33,11 @@ public class Article {
         this.name = name;
     }
 
-    public Orderline getOrderline() {
+    public OrderLine getOrderline() {
         return orderline;
     }
 
-    public void setOrderline(Orderline orderline) {
+    public void setOrderline(OrderLine orderline) {
         this.orderline = orderline;
     }
 }

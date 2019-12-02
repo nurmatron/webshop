@@ -10,7 +10,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToMany(mappedBy = "order")
-    private List<Orderline> orderlines;
+    private List<OrderLine> orderlines;
 
     @ManyToOne
     private Customer customer;
@@ -18,7 +18,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(List<Orderline> orderlines, Customer customer) {
+    public Order(List<OrderLine> orderlines, Customer customer) {
         this.orderlines = orderlines;
         this.customer = customer;
     }
@@ -31,11 +31,11 @@ public class Order {
         this.id = id;
     }
 
-    public List<Orderline> getOrderlines() {
+    public List<OrderLine> getOrderlines() {
         return orderlines;
     }
 
-    public void setOrderlines(List<Orderline> orderlines) {
+    public void setOrderlines(List<OrderLine> orderlines) {
         this.orderlines = orderlines;
     }
 
