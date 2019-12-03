@@ -9,20 +9,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements CrudService<Employee> {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @Override
-    public Employee create(Employee unit) {
-        return employeeRepository.saveAndFlush(unit);
-    }
 
     @Override
-    public Employee getOne(Integer id) {
-        return employeeRepository.getOne(id);
+    public Optional<Employee> create(Employee employee) {
+        return Optional.of(employeeRepository.saveAndFlush(employee));
+    }
+
+
+    @Override
+    public Optional<Employee> getOne(Integer id) {
+        return Optional.of(employeeRepository.getOne(id));
     }
 
     @Override
@@ -30,19 +33,24 @@ public class EmployeeService implements CrudService<Employee> {
         return employeeRepository.findAll();
     }
 
+
     @Override
-    public Employee update(Integer id, Employee unit) {
+    public Optional<Employee> update(Integer id, Employee employee) {
         //TODO  add validation for each field.
         Employee existingEmployee = employeeRepository.getOne(id);
-        BeanUtils.copyProperties(unit, existingEmployee, "id");
-        return employeeRepository.saveAndFlush(existingEmployee);
+        BeanUtils.copyProperties(employee, existingEmployee, "id");
+        return Optional.of(employeeRepository.saveAndFlush(existingEmployee));
     }
-
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
         employeeRepository.deleteById(id);
+        try {
+            Employee employee = employeeRepository.getOne(id);
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
-
 
 }

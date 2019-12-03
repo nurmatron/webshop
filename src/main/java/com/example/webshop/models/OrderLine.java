@@ -1,10 +1,12 @@
 package com.example.webshop.models;
 
+import com.example.webshop.controllers.Controller;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="orderlines")
-public class OrderLine {
+@Table(name="api/orderlines")
+public class OrderLine  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
