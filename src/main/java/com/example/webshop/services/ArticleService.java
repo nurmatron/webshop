@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ArticleService implements CrudService<Article> {
 
@@ -14,13 +16,13 @@ public class ArticleService implements CrudService<Article> {
     ArticleRepository articleRepository;
 
     @Override
-    public Article create(Article article) {
-       return articleRepository.saveAndFlush(article);
+    public Optional<Article> create(Article article) {
+       return Optional.of(articleRepository.saveAndFlush(article));
     }
 
     @Override
-    public Article getOne(Integer id) {
-        return articleRepository.getOne(id);
+    public Optional<Article> getOne(Integer id) {
+        return Optional.of(articleRepository.getOne(id));
     }
 
     @Override
@@ -29,15 +31,21 @@ public class ArticleService implements CrudService<Article> {
     }
 
     @Override
-    public Article update(Integer id, Article article) {
+    public Optional<Article> update(Integer id, Article article) {
         //TODO  add validation for each field.
         Article existingArticle = articleRepository.getOne(id);
         BeanUtils.copyProperties(article, existingArticle, "id");
-        return articleRepository.saveAndFlush(existingArticle);
+        return Optional.of(articleRepository.saveAndFlush(existingArticle));
     }
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
         articleRepository.deleteById(id);
+        try {
+            Article article = articleRepository.getOne(id);
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 }

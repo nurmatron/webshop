@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderService implements CrudService<Order>{
+public class OrderService implements CrudService<Order> {
 
     @Autowired
     private OrderRepository orderRepository;
