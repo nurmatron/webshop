@@ -37,7 +37,7 @@ public class ArticleController extends Controller<Article> {
     @PutMapping
     @RequestMapping(path = "update/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Integer id, @RequestBody Article article) {
-        return ResponseEntity.ok(articleService.update(id, article).get());
+        return super.updateUnit(id, article, articleService);
     }
 
     // delete
