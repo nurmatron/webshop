@@ -15,7 +15,7 @@ public class ArticleController extends Controller<Article> {
     @Autowired
     private ArticleService articleService;
 
-    @PostMapping
+    @PostMapping(path = "save")
     public ResponseEntity<Article> createArticle(@RequestBody final Article article) {
         return super.createUnit(article, articleService);
     }

@@ -1,5 +1,6 @@
 package com.example.webshop.controllers;
 
+import com.example.webshop.models.Article;
 import com.example.webshop.models.Customer;
 import com.example.webshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +8,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/customer")
-public class CustomerController extends Controller<Customer>{
+public class CustomerController extends Controller<Customer> {
 
     @Autowired
     private CustomerService customerService;
 
+
+
     //create
-    @PostMapping
+    @PostMapping(path = "save")
     public ResponseEntity<Customer> createCustomer(@RequestBody final Customer customer) {
         return super.createUnit(customer, customerService);
     }
@@ -51,12 +55,21 @@ public class CustomerController extends Controller<Customer>{
 
     //login
     @GetMapping(path = "login/{name}/{password}")
-    public ResponseEntity<String> login(@PathVariable String name, @PathVariable String password) {
-        if(customerService.login(name, password)){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Login successful, welcome!");
+    public String login(@PathVariable String name, @PathVariable String password) {
+        if (customerService.login(name, password)) {
+            return "loggedin";
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Name and password didn't match any user.");
+            return "login";
         }
+    }
+
+    @GetMapping(path = "loggedin") // byt eventuellt denna
+    public ResponseEntity<List<Article>> showAllArticles(){
+        if (!customerService.isLoggedin()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.ok().body(customerService.getAllArticles());
     }
 
 
@@ -67,7 +80,6 @@ public class CustomerController extends Controller<Customer>{
 
 
     //see all articles
-
 
 
 }

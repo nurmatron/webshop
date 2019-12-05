@@ -16,7 +16,7 @@ public class OrderLineController extends Controller<OrderLine> {
     OrderLineService orderLineService;
 
     //create
-    @PostMapping
+    @PostMapping(path = "save")
     public ResponseEntity<OrderLine> createOrderLine(@RequestBody final OrderLine orderLine) {
         return super.createUnit(orderLine, orderLineService);
     }

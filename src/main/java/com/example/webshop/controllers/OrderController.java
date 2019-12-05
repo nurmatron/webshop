@@ -16,7 +16,7 @@ public class OrderController extends Controller<Order>{
     private OrderService orderService;
 
     //create
-    @PostMapping
+    @PostMapping(path = "save")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         return super.createUnit(order, orderService);
     }

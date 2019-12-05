@@ -16,7 +16,7 @@ public class EmployeeController extends Controller<Employee> {
     EmployeeService employeeService;
 
     //create
-    @PostMapping
+    @PostMapping(path = "save")
     public ResponseEntity<Employee> createEmployee(@RequestBody final Employee employee) {
         return super.createUnit(employee, employeeService);
     }
