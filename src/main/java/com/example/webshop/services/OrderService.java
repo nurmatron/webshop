@@ -1,12 +1,14 @@
 package com.example.webshop.services;
 
 import com.example.webshop.models.Order;
+import com.example.webshop.models.OrderLine;
 import com.example.webshop.repositories.OrderRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService implements CrudService<Order> {
@@ -15,13 +17,13 @@ public class OrderService implements CrudService<Order> {
     private OrderRepository orderRepository;
 
     @Override
-    public Order create(Order order) {
-        return orderRepository.saveAndFlush(order);
+    public Optional<Order> create(Order order) {
+        return Optional.of(orderRepository.saveAndFlush(order));
     }
 
     @Override
-    public Order getOne(Integer id) {
-        return orderRepository.getOne(id);
+    public Optional<Order> getOne(Integer id) {
+        return Optional.of(orderRepository.getOne(id));
     }
 
     @Override
@@ -30,14 +32,20 @@ public class OrderService implements CrudService<Order> {
     }
 
     @Override
-    public Order update(Integer id, Order order) {
-        Order existingOrder = getOne(id);
+    public Optional<Order> update(Integer id, Order order) {
+        Order existingOrder = orderRepository.getOne(id);
         BeanUtils.copyProperties(order, existingOrder, "id");
-        return orderRepository.saveAndFlush(existingOrder);
+        return Optional.of(orderRepository.saveAndFlush(existingOrder));
     }
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
         orderRepository.deleteById(id);
+        try {
+            Order order = orderRepository.getOne(id);
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 }

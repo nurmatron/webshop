@@ -3,48 +3,49 @@ package com.example.webshop.controllers;
 import com.example.webshop.models.Order;
 import com.example.webshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/order")
-public class OrderController {
+public class OrderController extends Controller<Order>{
 
     @Autowired
     private OrderService orderService;
 
     //create
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.create(order);
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        return super.createUnit(order, orderService);
     }
 
     //readOne
     @GetMapping
     @RequestMapping(path = "get/{id}")
-    public Order getOneOrder(@PathVariable Integer id) {
-        return orderService.getOne(id);
+    public ResponseEntity<Order> getOneOrder(@PathVariable Integer id) {
+        return super.getOneUnit(id, orderService);
     }
 
     //readAll
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAll();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        return super.getAllUnits(orderService);
     }
 
     //Udpate
     @PutMapping
     @RequestMapping(path = "update/{id}")
-    public Order updateOrder(@PathVariable Integer id, @RequestBody Order order) {
-        return orderService.update(id, order);
+    public ResponseEntity<Order> updateOrder(@PathVariable Integer id, @RequestBody Order order) {
+        return super.updateUnit(id, order, orderService);
     }
 
     //delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public void deleteOrder(@PathVariable Integer id){
-        orderService.delete(id);
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer id){
+        return super.deleteUnit(id, orderService);
     }
 
 }

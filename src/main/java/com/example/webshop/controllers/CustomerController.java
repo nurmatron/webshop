@@ -3,48 +3,71 @@ package com.example.webshop.controllers;
 import com.example.webshop.models.Customer;
 import com.example.webshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/customer")
-public class CustomerController {
+public class CustomerController extends Controller<Customer>{
 
     @Autowired
     private CustomerService customerService;
 
     //create
     @PostMapping
-    public Customer createCustomer(@RequestBody final Customer customer) {
-        return customerService.create(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody final Customer customer) {
+        return super.createUnit(customer, customerService);
     }
 
     //get one
     @GetMapping
     @RequestMapping(path = "get/{id}")
-    public Customer getOneCustomer(@PathVariable Integer id) {
-        return customerService.getOne(id);
+    public ResponseEntity<Customer> getOneCustomer(@PathVariable Integer id) {
+        return super.getOneUnit(id, customerService);
     }
 
     //get all
     @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAll();
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return super.getAllUnits(customerService);
     }
 
     //update
     @PutMapping
     @RequestMapping(path = "update/{id}")
-    public Customer updateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
-        return customerService.update(id, customer);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
+        return super.updateUnit(id, customer, customerService);
     }
 
     //delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public void deleteOneCustomer(@PathVariable Integer id) {
-        customerService.delete(id);
+    public ResponseEntity<String> deleteOneCustomer(@PathVariable Integer id) {
+        return super.deleteUnit(id, customerService);
     }
+
+    //login
+    @GetMapping(path = "login/{name}/{password}")
+    public ResponseEntity<String> login(@PathVariable String name, @PathVariable String password) {
+        if(customerService.login(name, password)){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Login successful, welcome!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Name and password didn't match any user.");
+        }
+    }
+
+
+    //add to basket
+
+
+    //create order from basket
+
+
+    //see all articles
+
+
 
 }
