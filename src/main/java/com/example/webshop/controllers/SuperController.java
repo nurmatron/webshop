@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Controller<T> {
+public abstract class SuperController<T> {
 
-    public Controller() {
+    public SuperController() {
     }
 
     public ResponseEntity<T> createUnit(final T unit, CrudService crud) {

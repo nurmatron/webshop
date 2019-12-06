@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 public class OrderService implements CrudService<Order> {
-
     @Autowired
     private OrderRepository orderRepository;
 

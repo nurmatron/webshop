@@ -1,7 +1,5 @@
 package com.example.webshop.models;
 
-import com.example.webshop.controllers.Controller;
-
 import javax.persistence.*;
 
 @Entity

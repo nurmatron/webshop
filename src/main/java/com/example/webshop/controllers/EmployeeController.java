@@ -1,7 +1,6 @@
 package com.example.webshop.controllers;
 
 import com.example.webshop.models.Employee;
-import com.example.webshop.repositories.EmployeeRepository;
 import com.example.webshop.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/employee")
-public class EmployeeController extends Controller<Employee> {
+public class EmployeeController extends SuperController<Employee> {
     @Autowired
     EmployeeService employeeService;
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/article")
-public class ArticleController extends Controller<Article> {
+public class ArticleController extends SuperController<Article> {
 
     @Autowired
     private ArticleService articleService;

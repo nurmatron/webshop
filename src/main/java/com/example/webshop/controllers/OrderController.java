@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/order")
-public class OrderController extends Controller<Order>{
+public class OrderController extends SuperController<Order> {
 
     @Autowired
     private OrderService orderService;

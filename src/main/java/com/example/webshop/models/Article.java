@@ -9,6 +9,8 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
+    private double price;
+    private int quantity;
 
     @OneToOne(mappedBy = "article")
     private OrderLine orderline;
@@ -39,5 +41,30 @@ public class Article {
 
     public void setOrderline(OrderLine orderline) {
         this.orderline = orderline;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void addQuantity() {
+        quantity++;
+    }
+    public void subQuantity(){
+        if (quantity > 0 ){
+            quantity--;
+        }
     }
 }
