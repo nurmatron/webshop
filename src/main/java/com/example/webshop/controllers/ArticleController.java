@@ -43,7 +43,7 @@ public class ArticleController extends Controller<Article> {
     // delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public ResponseEntity<String> deleteOneArticle(@PathVariable Integer id) {
-        return super.deleteUnit(id, articleService);
+    public void deleteOneArticle(@PathVariable Integer id) {
+        super.deleteUnit(id, articleService);
     }
 }

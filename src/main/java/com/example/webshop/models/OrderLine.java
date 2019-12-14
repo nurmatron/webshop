@@ -1,11 +1,13 @@
 package com.example.webshop.models;
 
 import com.example.webshop.controllers.Controller;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "orderlines")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OrderLine  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +17,7 @@ public class OrderLine  {
     @ManyToOne
     private Order order;
     private int quantity;
-     public OrderLine() {}
+    public OrderLine() {}
 
     public OrderLine(Article article, Order order, int quantity) {
         this.article = article;

@@ -44,8 +44,8 @@ public class OrderController extends Controller<Order>{
     //delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public ResponseEntity<String> deleteOrder(@PathVariable Integer id){
-        return super.deleteUnit(id, orderService);
+    public void deleteOrder(@PathVariable Integer id){
+        super.deleteUnit(id, orderService);
     }
 
 }

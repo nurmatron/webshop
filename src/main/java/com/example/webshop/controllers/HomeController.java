@@ -1,13 +1,15 @@
 package com.example.webshop.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
 
     @RequestMapping("/")
-    String index() {
+    public String index(Model model) {
+        model.addAttribute("message", "Please login.");
         return "index";
     }
 }

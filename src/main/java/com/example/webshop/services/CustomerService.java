@@ -60,14 +60,13 @@ public class CustomerService implements CrudService<Customer> {
         }
     }
 
-    public boolean login(String name, String password) {
-        isLoggedin = false;
+    public Customer login(String name, String password) {
         Optional<Customer> c = customerRepository.findByNameAndPassword(name, password);
         if (c.isPresent()) {
-            isLoggedin = true;
             customer = c.get();
+            return customer;
         }
-        return isLoggedin;
+        return null;
     }
 
     public boolean isLoggedin() {

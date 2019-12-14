@@ -1,0 +1,48 @@
+<h2>All the articles</h2>
+<input type="text" (input)="searchArticles()" [(ngModel)]="searchArticle" placeholder="Search articles">
+<table>
+    <thead>
+    <tr>
+      <th>Article</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Add to basket</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let article of articleListToDisplay">
+      <td>{{article.name}}</td>
+      <td>{{article.price}}</td>
+      <button [disabled]="article.quantity < 1" (click)="subQuantity(article)">-</button>
+      <td>{{article.quantity}}</td>
+      <button (click)="addQuantity(article)">+</button>
+      <button (click)="addToBasket(article)">Add to basket</button>
+    </tr>
+    </tbody>
+</table>
+<hr>
+<h2>Your basket</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Article</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Remove from basket</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let article of customer.basket">
+    <td>{{article.name}}</td>
+    <td>{{article.price}}</td>
+    <button [disabled]="article.quantity < 1" (click)="subBasketQuantity(article)">-</button>
+    <td>{{article.quantity}}</td>
+    <button (click)="addBasketQuantity(article)">+</button>
+    <button (click)="removeFromBasket(article)">Remove</button>
+  </tr>
+  </tbody>
+</table>
+<h3>Total price: {{basketPrice}}</h3>
+<button (click)="placeOrder()">Checkout</button>
+<p *ngIf="!orderPlacedSuccessfully" style="color: red">Something went wrong with your checkout</p>
+<app-order-summary *ngIf="orderPlacedSuccessfully"></app-order-summary>

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/employee")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmployeeController extends Controller<Employee> {
     @Autowired
     EmployeeService employeeService;
@@ -46,8 +47,8 @@ public class EmployeeController extends Controller<Employee> {
     // delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public ResponseEntity<String> deleteOneEmployee(@PathVariable Integer id) {
-        return super.deleteUnit(id, employeeService);
+    public void deleteOneEmployee(@PathVariable Integer id) {
+        super.deleteUnit(id, employeeService);
     }
 
 }

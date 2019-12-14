@@ -41,11 +41,10 @@ public class ArticleService implements CrudService<Article> {
     @Override
     public boolean delete(Integer id) {
         articleRepository.deleteById(id);
-        try {
-            Article article = articleRepository.getOne(id);
-            return false;
-        } catch (Exception e) {
+            Optional<Article> article = getOne(id);
+            if(article.isPresent()) {
+                return false;
+            }
             return true;
-        }
     }
 }

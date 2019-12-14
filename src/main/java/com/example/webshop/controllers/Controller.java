@@ -25,7 +25,7 @@ public abstract class Controller<T> {
     public ResponseEntity<T> getOneUnit(Integer id, CrudService crud) {
         Optional<T> optionalUnit = crud.getOne(id);
         if(optionalUnit.isPresent()) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(optionalUnit.get());
+            return ResponseEntity.ok().body(optionalUnit.get());
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(optionalUnit.get());
         }
@@ -49,12 +49,8 @@ public abstract class Controller<T> {
         }
     }
 
-    public ResponseEntity<String> deleteUnit(Integer id, CrudService crud) {
-        if (crud.delete(id)) {
-            return ResponseEntity.ok("Delete completed");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Delete failed");
-        }
+    public void deleteUnit(Integer id, CrudService crud) {
+        crud.delete(id);
     }
 
 }
