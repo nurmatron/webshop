@@ -2,7 +2,6 @@ package com.example.webshop.controllers;
 
 import com.example.webshop.models.OrderLine;
 import com.example.webshop.services.OrderLineService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path ="api/orderline")
-public class OrderLineController extends Controller<OrderLine> {
+public class OrderLineController extends SuperController<OrderLine> {
     @Autowired
     OrderLineService orderLineService;
 
