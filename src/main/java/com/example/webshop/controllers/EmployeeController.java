@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/employee")
 @CrossOrigin(origins = "http://localhost:4200")
-public class EmployeeController extends Controller<Employee> {
+public class EmployeeController extends SuperController<Employee> {
     @Autowired
     EmployeeService employeeService;
 

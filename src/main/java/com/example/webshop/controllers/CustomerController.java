@@ -17,7 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "api/customer")
 @CrossOrigin(origins = "http://localhost:4200")
-public class CustomerController extends Controller<Customer> {
+public class CustomerController extends SuperController<Customer> {
 
     @Autowired
     private CustomerService customerService;
@@ -75,6 +75,7 @@ public class CustomerController extends Controller<Customer> {
     @PostMapping(path = "/checkout/{id}")
     public boolean checkout(@PathVariable Integer id, @RequestBody List<Article> basket) {
         Optional<Customer> customerOptional = customerService.getOne(id);
+        // Borde ändra logiken till CustomerService...
         if(customerOptional.isPresent()){
             Customer customer = customerOptional.get();
             Order customerOrder = new Order();
