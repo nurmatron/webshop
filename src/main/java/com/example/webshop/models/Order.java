@@ -3,6 +3,7 @@ package com.example.webshop.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,9 @@ public class Order {
     }
 
     public List<OrderLine> getOrderlines() {
+        if(orderlines == null) {
+            orderlines = new ArrayList<>();
+        }
         return orderlines;
     }
 

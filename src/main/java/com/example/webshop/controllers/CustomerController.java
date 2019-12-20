@@ -79,6 +79,7 @@ public class CustomerController extends SuperController<Customer> {
         if(customerOptional.isPresent()){
             Customer customer = customerOptional.get();
             Order customerOrder = new Order();
+            customerOrder.setCustomer(customer);
             basket.forEach(article -> {
                 OrderLine orderLine = new OrderLine(article, customerOrder, article.getQuantity());
                 customerOrder.getOrderlines().add(orderLine);
@@ -86,6 +87,7 @@ public class CustomerController extends SuperController<Customer> {
             customer.getOrders().add(customerOrder);
             Optional<Customer> updatedCustomer = customerService.update(id, customer);
             if(updatedCustomer.isPresent()) {
+                orderService.create(customerOrder);
                 return true;
             }
             return false;
