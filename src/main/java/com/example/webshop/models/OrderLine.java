@@ -1,6 +1,5 @@
 package com.example.webshop.models;
 
-import com.example.webshop.controllers.Controller;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "orderlines")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class OrderLine  {
+public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

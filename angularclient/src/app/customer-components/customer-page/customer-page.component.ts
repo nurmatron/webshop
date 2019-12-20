@@ -15,6 +15,7 @@ export class CustomerPageComponent implements OnInit {
   basketPrice: number = 0;
   searchArticle: string;
   orderPlacedSuccessfully: boolean;
+  orderPlaced: boolean;
 
   constructor(private customerService:CustomerService) {
 
@@ -22,6 +23,7 @@ export class CustomerPageComponent implements OnInit {
 
   ngOnInit() {
     this.customer.basket = [];
+    this.orderPlaced = false;
     this.customerService.getAllArticles().subscribe(data => {
       if(data != null) {
         this.articleList = data;
@@ -72,6 +74,7 @@ export class CustomerPageComponent implements OnInit {
   }
 
   placeOrder() {
+    this.orderPlaced = true;
     this.customerService.checkout(this.customer).subscribe(data => {
       this.orderPlacedSuccessfully = data;
     });

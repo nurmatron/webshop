@@ -8,12 +8,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CustomerService} from "./services/customer.service";
 import {HttpClientModule} from "@angular/common/http";
 import { CustomerPageComponent } from './customer-components/customer-page/customer-page.component';
+import { OrderSummaryComponent } from './order-components/order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerLoginComponent,
     CustomerPageComponent,
+    OrderSummaryComponent,
   ],
   imports: [
     BrowserModule,

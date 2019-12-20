@@ -44,5 +44,9 @@
 </table>
 <h3>Total price: {{basketPrice}}</h3>
 <button (click)="placeOrder()">Checkout</button>
-<p *ngIf="!orderPlacedSuccessfully" style="color: red">Something went wrong with your checkout</p>
-<app-order-summary *ngIf="orderPlacedSuccessfully"></app-order-summary>
+<p *ngIf="!orderPlacedSuccessfully && orderPlaced" style="color: red">Something went wrong with your checkout</p>
+<app-order-summary
+  [basket]="customer.basket"
+  [basketPrice]="basketPrice"
+  *ngIf="orderPlaced && orderPlacedSuccessfully">
+</app-order-summary>

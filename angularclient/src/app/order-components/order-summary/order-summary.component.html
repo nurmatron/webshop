@@ -1,0 +1,19 @@
+<h1>Your order has been placed!</h1>
+<h3>Order summary:</h3>
+<table>
+  <thead>
+  <tr>
+    <th>Article</th>
+    <th>Price</th>
+    <th>Quantity</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let article of basket">
+    <td>{{article.name}}</td>
+    <td>{{article.price}}</td>
+    <td>{{article.quantity}}</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Total price: {{basketPrice}}</h3>
