@@ -1,5 +1,6 @@
 package com.example.webshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Customer {
     private String password;
     private String mail;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 

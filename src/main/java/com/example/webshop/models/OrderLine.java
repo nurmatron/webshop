@@ -1,6 +1,8 @@
 package com.example.webshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -11,9 +13,11 @@ public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @JsonIgnore
     @OneToOne
     private Article article;
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
     private int quantity;
     public OrderLine() {}

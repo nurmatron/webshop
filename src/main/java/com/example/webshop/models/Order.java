@@ -1,5 +1,6 @@
 package com.example.webshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,9 +14,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @OneToMany(mappedBy = "order")
+    @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLine> orderlines;
-
+    @JsonIgnore
     @ManyToOne
     private Customer customer;
 

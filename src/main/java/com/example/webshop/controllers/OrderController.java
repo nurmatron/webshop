@@ -2,11 +2,15 @@ package com.example.webshop.controllers;
 
 import com.example.webshop.models.Order;
 import com.example.webshop.services.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 @RestController
 @RequestMapping(path = "api/order")
@@ -34,6 +38,11 @@ public class OrderController extends SuperController<Order> {
         return super.getAllUnits(orderService);
     }
 
+    @GetMapping(path = "/getall/{id}")
+    public ResponseEntity<List<Order>> getOrdersForCustomer(@PathVariable Integer id) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(orderService.getAllForCustomer(id));
+    }
+
     //Udpate
     @PutMapping
     @RequestMapping(path = "update/{id}")
@@ -44,7 +53,7 @@ public class OrderController extends SuperController<Order> {
     //delete
     @DeleteMapping
     @RequestMapping(path = "delete/{id}")
-    public void deleteOrder(@PathVariable Integer id){
+    public void deleteOrder(@PathVariable Integer id) {
         super.deleteUnit(id, orderService);
     }
 

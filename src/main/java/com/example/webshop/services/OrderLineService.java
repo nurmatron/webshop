@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderLineService implements CrudService<OrderLine> {
@@ -18,8 +19,10 @@ public class OrderLineService implements CrudService<OrderLine> {
 
     @Override
     public Optional<OrderLine> create(OrderLine orderLine) {
-        return Optional.of(orderLineRepository.saveAndFlush(orderLine));
+        return Optional.of(orderLineRepository.save(orderLine));
+        // return Optional.of(orderLineRepository.saveAndFlush(orderLine));
     }
+
     @Override
     public Optional<OrderLine> getOne(Integer id) {
         return Optional.of(orderLineRepository.getOne(id));
@@ -30,6 +33,10 @@ public class OrderLineService implements CrudService<OrderLine> {
         return orderLineRepository.findAll();
     }
 
+    public List<OrderLine> getAllForOrder(Integer id) {
+        List<OrderLine> allOrderLines = orderLineRepository.findAll();
+        return allOrderLines.stream().filter(orderLine -> orderLine.getOrder().getId() == id).collect(Collectors.toList());
+    }
 
 
     @Override
@@ -39,6 +46,7 @@ public class OrderLineService implements CrudService<OrderLine> {
         BeanUtils.copyProperties(orderLine, existingOrderLine, "id");
         return Optional.of(orderLineRepository.saveAndFlush(existingOrderLine));
     }
+
     @Override
     public boolean delete(Integer id) {
         orderLineRepository.deleteById(id);

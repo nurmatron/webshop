@@ -1,7 +1,9 @@
+// @ts-ignore
 import {Component, Input, OnInit} from '@angular/core';
 import {Article} from "../../models/article.model";
 import {CustomerService} from "../../services/customer.service";
 
+// @ts-ignore
 @Component({
   selector: 'app-customer-page',
   templateUrl: './customer-page.component.html',

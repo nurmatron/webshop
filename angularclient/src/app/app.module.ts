@@ -9,6 +9,8 @@ import {CustomerService} from "./services/customer.service";
 import {HttpClientModule} from "@angular/common/http";
 import { CustomerPageComponent } from './customer-components/customer-page/customer-page.component';
 import { OrderSummaryComponent } from './order-components/order-summary/order-summary.component';
+import { PreviousOrdersComponent } from './order-components/previous-orders/previous-orders.component';
+import {OrderService} from "./services/order.service";
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { OrderSummaryComponent } from './order-components/order-summary/order-su
     CustomerLoginComponent,
     CustomerPageComponent,
     OrderSummaryComponent,
+    PreviousOrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { OrderSummaryComponent } from './order-components/order-summary/order-su
     HttpClientModule,
     FormsModule
   ],
-  providers: [CustomerService],
-  bootstrap: [AppComponent]
+  providers: [CustomerService, OrderService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

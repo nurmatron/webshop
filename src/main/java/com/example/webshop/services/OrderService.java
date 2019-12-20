@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService implements CrudService<Order> {
@@ -35,6 +36,10 @@ public class OrderService implements CrudService<Order> {
         Order existingOrder = orderRepository.getOne(id);
         BeanUtils.copyProperties(order, existingOrder, "id");
         return Optional.of(orderRepository.saveAndFlush(existingOrder));
+    }
+    public List<Order>getAllForCustomer(Integer id){
+      List<Order> allOrderList =  orderRepository.findAll();
+        return allOrderList.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
     }
 
     @Override
