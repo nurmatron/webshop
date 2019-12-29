@@ -16,11 +16,12 @@
       <button [disabled]="article.quantity < 1" (click)="subQuantity(article)">-</button>
       <td>{{article.quantity}}</td>
       <button (click)="addQuantity(article)">+</button>
-      <button (click)="addToBasket(article)">Add to basket</button>
+      <button (click)="addToBasket(article)" [disabled]="orderPlacedSuccessfully">Add to basket</button>
     </tr>
     </tbody>
 </table>
 <hr>
+<div *ngIf="!orderPlacedSuccessfully">
 <h2>Your basket</h2>
 <table>
   <thead>
@@ -43,6 +44,7 @@
   </tbody>
 </table>
 <h3>Total price: {{basketPrice}}</h3>
+</div>
 <button (click)="placeOrder()">Checkout</button>
 <p *ngIf="!orderPlacedSuccessfully && orderPlaced" style="color: red">Something went wrong with your checkout</p>
 <app-order-summary

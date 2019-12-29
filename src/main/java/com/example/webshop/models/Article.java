@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -17,8 +17,8 @@ public class Article {
     private double price;
     private int quantity;
     @JsonIgnore
-    @OneToOne(mappedBy = "article")
-    private OrderLine orderline;
+    @OneToMany(mappedBy = "article")
+    private List<OrderLine> orderlines;
 
     public Article() {
         quantity = 1;
@@ -40,12 +40,12 @@ public class Article {
         this.name = name;
     }
 
-    public OrderLine getOrderline() {
-        return orderline;
+    public List<OrderLine> getOrderlines() {
+        return orderlines;
     }
 
-    public void setOrderline(OrderLine orderline) {
-        this.orderline = orderline;
+    public void setOrderlines(List<OrderLine> orderlines) {
+        this.orderlines = orderlines;
     }
 
     public int getQuantity() {

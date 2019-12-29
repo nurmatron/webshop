@@ -1,7 +1,6 @@
 package com.example.webshop.services;
 
 import com.example.webshop.models.Order;
-import com.example.webshop.models.OrderLine;
 import com.example.webshop.repositories.OrderRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

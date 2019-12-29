@@ -7,11 +7,9 @@ import com.example.webshop.models.OrderLine;
 import com.example.webshop.services.CustomerService;
 import com.example.webshop.services.OrderLineService;
 import com.example.webshop.services.OrderService;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

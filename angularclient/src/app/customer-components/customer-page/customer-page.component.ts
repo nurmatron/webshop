@@ -26,6 +26,7 @@ export class CustomerPageComponent implements OnInit {
   ngOnInit() {
     this.customer.basket = [];
     this.orderPlaced = false;
+    this.orderPlacedSuccessfully = false;
     this.customerService.getAllArticles().subscribe(data => {
       if(data != null) {
         this.articleList = data;
@@ -36,7 +37,7 @@ export class CustomerPageComponent implements OnInit {
 
   searchArticles() {
     this.articleListToDisplay = this.articleList.filter(article => article.name.toLowerCase().includes(this.searchArticle.toLocaleLowerCase()));
-  }
+}
 
   subQuantity(article: Article) {
     article.quantity--;
@@ -76,9 +77,9 @@ export class CustomerPageComponent implements OnInit {
   }
 
   placeOrder() {
-    this.orderPlaced = true;
     this.customerService.checkout(this.customer).subscribe(data => {
       this.orderPlacedSuccessfully = data;
+      this.orderPlaced = true;
     });
   }
 
