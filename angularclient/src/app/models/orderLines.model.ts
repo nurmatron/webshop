@@ -5,6 +5,9 @@ export class OrderLine {
   id: number;
   order: Order;
   article : Article;
+  article_id : number;
+  order_id : number;
+
 
   constructor() {
 

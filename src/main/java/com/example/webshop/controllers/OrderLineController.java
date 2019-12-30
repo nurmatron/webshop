@@ -1,7 +1,9 @@
 package com.example.webshop.controllers;
 
+import com.example.webshop.models.Article;
 import com.example.webshop.models.Order;
 import com.example.webshop.models.OrderLine;
+import com.example.webshop.services.ArticleService;
 import com.example.webshop.services.OrderLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,12 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/orderline")
 public class OrderLineController extends SuperController<OrderLine> {
     @Autowired
     OrderLineService orderLineService;
+    @Autowired
+    ArticleService articleService;
 
     //create
     @PostMapping(path = "save")
@@ -32,6 +37,21 @@ public class OrderLineController extends SuperController<OrderLine> {
     @GetMapping(path = "/getall/{id}")
     public ResponseEntity<List<OrderLine>> getOrderLinesForOrder(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(orderLineService.getAllForOrder(id));
+    }
+
+    @GetMapping(path = "/getarticle/{id}")
+    public ResponseEntity<Article> getOneArticleFromOrderLine(@PathVariable Integer id) {
+
+        Optional<OrderLine> orderLine = orderLineService.getOne(id);
+        if (orderLine.isPresent()) {
+            System.out.println(orderLine.get());
+            Optional<Article> article = articleService.getOne(orderLine.get().getArticle().getId());
+            if (article.isPresent()) {
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(article.get());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     //readAll

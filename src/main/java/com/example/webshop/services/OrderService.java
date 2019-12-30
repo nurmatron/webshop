@@ -38,7 +38,9 @@ public class OrderService implements CrudService<Order> {
     }
     public List<Order>getAllForCustomer(Integer id){
       List<Order> allOrderList =  orderRepository.findAll();
-        return allOrderList.stream().filter(order -> order.getId() == id).collect(Collectors.toList());
+        System.out.println(allOrderList);
+        System.out.println(allOrderList.stream().filter(order -> order.getCustomer().getId() == id).collect(Collectors.toList()));
+        return allOrderList.stream().filter(order -> order.getCustomer().getId() == id).collect(Collectors.toList());
     }
 
     @Override

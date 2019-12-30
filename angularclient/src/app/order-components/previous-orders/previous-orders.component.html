@@ -1,13 +1,30 @@
-<table>
+
+
+  <hr width="100%">
+  <h2>Previous orders : </h2>
+  <br>
+<table *ngFor="let order of orderList" >
   <thead>
+
   <tr>
     <th>Article</th>
     <th>Price</th>
     <th>Quantity</th>
-    <th>Add to basket</th>
   </tr>
   </thead>
-  <tbody>
-
+  <tbody width="100%" >
+  <tr *ngFor="let ol of order.orderLines">
+    <td>
+      {{ol.article.name}}
+  </td>
+    <td>
+      {{ol.article.price}}
+    </td>
+    <td>
+      {{ol.article.quantity}}
+    </td>
+  </tr>
   </tbody>
+  <h3>Order cost : {{totalCostOfOrder(order.orderLines)}}</h3>
+  <hr width="700%">
 </table>
