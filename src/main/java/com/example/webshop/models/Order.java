@@ -20,6 +20,7 @@ public class Order {
     @JsonIgnore
     @ManyToOne
     private Customer customer;
+    private boolean expedited;
 
     public Order() {
     }
@@ -27,6 +28,7 @@ public class Order {
     public Order(List<OrderLine> orderlines, Customer customer) {
         this.orderlines = orderlines;
         this.customer = customer;
+        this.expedited = false;
     }
 
     public int getId() {
@@ -54,5 +56,13 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public boolean isExpedited() {
+        return expedited;
+    }
+
+    public void setExpedited(boolean expedited) {
+        this.expedited = expedited;
     }
 }

@@ -1,0 +1,41 @@
+<p-dialog header="create article" [(visible)]="showCreateArticle" modal="true" width="400" responsive="true">
+
+<form>
+  <label>Article name</label>
+  <input
+    name="name"
+    placeholder="article name"
+    type="text"
+    [(ngModel)]="newArticleName">
+
+  <label>Article price</label>
+  <input
+    name="price"
+    placeholder="article price"
+         type="text"
+         [(ngModel)]="newArticlePrice">
+  <button type="button" (click)="createNewArticle()">SAVE</button>
+</form>
+</p-dialog>
+
+
+<h2>All the articles</h2>
+<input type="text" (input)="searchArticles()" [(ngModel)]="searchArticle" placeholder="Search articles">
+<button (click)="showCreateArticle = true"> create article</button>
+<table>
+  <thead>
+  <tr>
+    <th>Article</th>
+    <th>Price</th>
+    <th>Quantity</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let article of articleListToDisplay">
+    <td>{{article.name}}</td>
+    <td>{{article.price}}</td>
+    <td>{{article.quantity}}</td>
+  </tr>
+  </tbody>
+</table>
+<hr>

@@ -2,6 +2,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Article} from "../../models/article.model";
 import {CustomerService} from "../../services/customer.service";
+import {ArticleService} from "../../services/article.service";
 
 // @ts-ignore
 @Component({
@@ -19,7 +20,7 @@ export class CustomerPageComponent implements OnInit {
   orderPlacedSuccessfully: boolean;
   orderPlaced: boolean;
 
-  constructor(private customerService:CustomerService) {
+  constructor(private customerService:CustomerService, private articleService : ArticleService) {
 
   }
 
@@ -27,7 +28,7 @@ export class CustomerPageComponent implements OnInit {
     this.customer.basket = [];
     this.orderPlaced = false;
     this.orderPlacedSuccessfully = false;
-    this.customerService.getAllArticles().subscribe(data => {
+    this.articleService.getAllArticles().subscribe(data => {
       if(data != null) {
         this.articleList = data;
         this.articleListToDisplay = data;

@@ -53,4 +53,8 @@ public class EmployeeService implements CrudService<Employee> {
         }
     }
 
+    public Boolean login(Integer id, String password) {
+        return employeeRepository.findByIdAndPassword(id, password).isPresent();
+    }
+
 }

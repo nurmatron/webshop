@@ -11,6 +11,12 @@ import { CustomerPageComponent } from './customer-components/customer-page/custo
 import { OrderSummaryComponent } from './order-components/order-summary/order-summary.component';
 import { PreviousOrdersComponent } from './order-components/previous-orders/previous-orders.component';
 import {OrderService} from "./services/order.service";
+import { EmployeeLoginComponent } from './employee-components/employee-login/employee-login.component';
+import { EmployeePageComponent } from './employee-components/employee-page/employee-page.component';
+import {EmployeeService} from "./services/employee.service";
+import {ArticleService} from "./services/article.service";
+import {DialogModule} from "primeng";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,15 +25,19 @@ import {OrderService} from "./services/order.service";
     CustomerPageComponent,
     OrderSummaryComponent,
     PreviousOrdersComponent,
+    EmployeeLoginComponent,
+    EmployeePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DialogModule,
+    NoopAnimationsModule,
   ],
-  providers: [CustomerService, OrderService],
+  providers: [CustomerService, OrderService , EmployeeService, ArticleService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

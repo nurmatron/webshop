@@ -4,6 +4,7 @@ import com.example.webshop.models.Employee;
 import com.example.webshop.repositories.EmployeeRepository;
 import com.example.webshop.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class EmployeeController extends SuperController<Employee> {
     public ResponseEntity<Employee> createEmployee(@RequestBody final Employee employee) {
         return super.createUnit(employee, employeeService);
     }
+
     //read1
     @GetMapping
     @RequestMapping(path = "get/{id}")
@@ -51,4 +53,14 @@ public class EmployeeController extends SuperController<Employee> {
         super.deleteUnit(id, employeeService);
     }
 
+
+    @GetMapping(path = "login/{id}/{password}")
+    public ResponseEntity<Boolean> loginEmployee(@PathVariable Integer id, @PathVariable String password) {
+        boolean loggedIn = employeeService.login(id, password);
+        if (loggedIn) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
 }
+

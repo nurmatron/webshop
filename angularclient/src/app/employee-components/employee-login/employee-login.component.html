@@ -1,0 +1,21 @@
+<form *ngIf="!loggedIn" (ngSubmit)="onSubmit()">
+  <label for="id"> id </label>
+  <input type="text" [(ngModel)]="id"
+         id="id"
+         name="name"
+         placeholder="Enter your id"
+         required #name="ngModel">
+  <br><br>
+  <label for="password">Password </label>
+  <input type="text" [(ngModel)]="password"
+         id="password"
+         name="password"
+         placeholder="Enter your password"
+         required #name="ngModel">
+  <button type="submit">Login in</button>
+
+
+</form>
+<p style="color: red">{{failedLoginMessage}}</p>
+<app-employee-page *ngIf="loggedIn">
+</app-employee-page>

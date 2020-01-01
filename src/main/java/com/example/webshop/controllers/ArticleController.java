@@ -16,7 +16,7 @@ public class ArticleController extends SuperController<Article> {
     private ArticleService articleService;
 
     @PostMapping(path = "save")
-    public ResponseEntity<Article> createArticle(@RequestBody final Article article) {
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         return super.createUnit(article, articleService);
     }
 
