@@ -17,6 +17,7 @@ import {EmployeeService} from "./services/employee.service";
 import {ArticleService} from "./services/article.service";
 import {DialogModule} from "primeng";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeOrderlistComponent } from './employee-components/employee-orderlist/employee-orderlist.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     PreviousOrdersComponent,
     EmployeeLoginComponent,
     EmployeePageComponent,
+    EmployeeOrderlistComponent,
   ],
   imports: [
     BrowserModule,

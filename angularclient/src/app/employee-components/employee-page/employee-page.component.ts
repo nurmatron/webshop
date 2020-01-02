@@ -47,4 +47,18 @@ export class EmployeePageComponent implements OnInit {
     this.showCreateArticle = false;
   }
 
+  deleteArticle(article: Article) {
+    let confirmRemove = confirm("Are you sure you want to delete " + article.name + "from database?");
+    if (confirmRemove) {
+      this.articleService.deleteArticle(article.id).subscribe(data => {
+        console.log(data , " i am data from delete")
+
+        if (data.status == 200) {
+          window.alert("Article has been removed.");
+          this.populateArticleList();
+        }
+      })
+    }
+  }
+
 }

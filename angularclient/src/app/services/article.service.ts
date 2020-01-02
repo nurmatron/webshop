@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Article} from "../models/article.model";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse, HttpResponseBase} from "@angular/common/http";
+import {error} from "util";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class ArticleService {
       price: price,
     };
     return this.http.post<Article>(this.articleUrl + "/save", article);
+  }
+
+  public deleteArticle(id: number): Observable<HttpResponse<boolean>> {
+    return this.http.delete<boolean>(this.articleUrl + "/delete/" + id, {observe : "response"});
   }
 }
 

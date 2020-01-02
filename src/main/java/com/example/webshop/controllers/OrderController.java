@@ -57,4 +57,15 @@ public class OrderController extends SuperController<Order> {
         super.deleteUnit(id, orderService);
     }
 
+    @PutMapping
+    @RequestMapping(path = "expedite/{id}")
+    public ResponseEntity<Order> expediteOrder(@PathVariable Integer id){
+     Optional<Order> order = orderService.getOne(id);
+        if (order.isPresent()){
+            order.get().setExpedited(true);
+            return super.updateUnit(id, order.get(), orderService);
+        }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 }
+

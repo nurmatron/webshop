@@ -21,7 +21,7 @@ export class PreviousOrdersComponent implements OnInit {
 
   ngOnInit() {
     this.orderList = [];
-    this.orderService.getAllOrders(this.customer.id).subscribe(data => {
+    this.orderService.getAllOrdersForCustomer(this.customer.id).subscribe(data => {
       data.forEach(order => { // för varje order id
         this.orderService.getOneOrder(order.id).subscribe(orderData => {
           let orderLines = [];

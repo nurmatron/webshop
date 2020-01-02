@@ -15,8 +15,11 @@ export class OrderService {
     this.orderUrl = "http://localhost:8080/api/order";
   }
 
-  public getAllOrders(id: number): Observable<Order[]> {
+  public getAllOrdersForCustomer(id: number): Observable<Order[]> {
     return this.http.get<Order[]>(this.orderUrl + "/getall/" + id)
+  }
+  public getAllOrders(){
+    return this.http.get<Order[]>(this.orderUrl);
   }
 
   public getAllOrderLines(id: number): Observable<OrderLine[]> {
@@ -27,6 +30,10 @@ export class OrderService {
   }
     public getArticleForOrderLine(id: number) : Observable<Article>{
     return  this.http.get<Article>(this.orderLineUrl + "/getarticle/" + id);
+    }
+    public expediteOrder(id : number) : Observable<Order>{
+    // @ts-ignore
+      return this.http.put<Order>(this.orderUrl + "/expedite/" + id);
     }
 
 }
