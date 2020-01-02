@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Article} from "../../models/article.model";
 import {Order} from "../../models/order.model";
 import {ArticleService} from "../../services/article.service";
+import {Category} from "../../models/category.enum";
 
 @Component({
   selector: 'app-employee-page',
@@ -9,14 +10,17 @@ import {ArticleService} from "../../services/article.service";
   styleUrls: ['./employee-page.component.css']
 })
 export class EmployeePageComponent implements OnInit {
-  searchArticle: string;
+  searchArticleByName: string;
+  searchArticleByCategory: string;
   articleList: Article[] = [];
   articleListToDisplay: Article[] = [];
   orderList: Order[];
   orderListToDisplay: Order[];
   showCreateArticle: boolean;
-  newArticleName: string;
-  newArticlePrice: number;
+  newArticleName: string ="";
+  newArticlePrice: number = 0;
+  newArticleCategory : Category = Category.Fruit;
+  categoryOptions = Object.values(Category);
 
   constructor(private articleService: ArticleService) {
   }
@@ -34,13 +38,19 @@ export class EmployeePageComponent implements OnInit {
     });
   }
 
-  searchArticles() {
-    this.articleListToDisplay = this.articleList.filter(article => article.name.toLowerCase().includes(this.searchArticle.toLocaleLowerCase()));
+  searchArticlesByName() {
+    this.articleListToDisplay = this.articleList.filter(article =>
+      article.name.toLowerCase().includes(this.searchArticleByName.toLocaleLowerCase()));
+  }
+  searchArticlesByCategory(){
+    this.articleListToDisplay = this.articleList.filter(article =>
+      article.category.toLowerCase().includes(this.searchArticleByCategory.toLocaleLowerCase()));
   }
 
   createNewArticle() {
-    this.articleService.createArticle(this.newArticleName, this.newArticlePrice).subscribe(data => {
+    this.articleService.createArticle(this.newArticleCategory,this.newArticleName, this.newArticlePrice).subscribe(data => {
       if (data != null) {
+        console.log(this.newArticleCategory)
         this.populateArticleList();
       }
     });

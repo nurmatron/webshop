@@ -16,6 +16,7 @@ public class Article {
     private String name;
     private double price;
     private int quantity;
+    private ArticleCategory category;
     @JsonIgnore
     @OneToMany(mappedBy = "article")
     private List<OrderLine> orderlines;
@@ -46,6 +47,14 @@ public class Article {
 
     public void setOrderlines(List<OrderLine> orderlines) {
         this.orderlines = orderlines;
+    }
+
+    public ArticleCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ArticleCategory articleCategory) {
+        this.category = articleCategory;
     }
 
     public int getQuantity() {
