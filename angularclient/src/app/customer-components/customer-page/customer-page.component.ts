@@ -3,6 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Article} from "../../models/article.model";
 import {CustomerService} from "../../services/customer.service";
 import {ArticleService} from "../../services/article.service";
+import {Category} from "../../models/category.enum";
 
 // @ts-ignore
 @Component({
@@ -16,12 +17,14 @@ export class CustomerPageComponent implements OnInit {
   articleList: Article[] = [];
   articleListToDisplay: Article[] = [];
   basketPrice: number = 0;
-  searchArticle: string;
+  searchArticleByName: string;
+  searchArticleByCategory: string = "ALL";
   orderPlacedSuccessfully: boolean;
   orderPlaced: boolean;
+  categoryOptions = Object.values(Category);
 
   constructor(private customerService:CustomerService, private articleService : ArticleService) {
-
+    this.categoryOptions.push("ALL");
   }
 
   ngOnInit() {
@@ -37,8 +40,16 @@ export class CustomerPageComponent implements OnInit {
   }
 
   searchArticles() {
-    this.articleListToDisplay = this.articleList.filter(article => article.name.toLowerCase().includes(this.searchArticle.toLocaleLowerCase()));
+    this.articleListToDisplay = this.articleList.filter(article => article.name.toLowerCase().includes(this.searchArticleByName.toLocaleLowerCase()));
 }
+  searchArticlesByCategory(){
+    if(this.searchArticleByCategory.includes("ALL")) {
+      this.articleListToDisplay = this.articleList;
+    } else {
+      this.articleListToDisplay = this.articleList.filter(article =>
+        article.category.toLowerCase().includes(this.searchArticleByCategory.toLocaleLowerCase()));
+    }
+  }
 
   subQuantity(article: Article) {
     article.quantity--;
@@ -78,10 +89,17 @@ export class CustomerPageComponent implements OnInit {
   }
 
   placeOrder() {
-    this.customerService.checkout(this.customer).subscribe(data => {
-      this.orderPlacedSuccessfully = data;
-      this.orderPlaced = true;
-    });
+    if(this.customer.basket.length > 0) {
+      this.customerService.checkout(this.customer).subscribe(data => {
+        this.orderPlacedSuccessfully = data;
+        this.orderPlaced = true;
+        if (data) {
+          window.alert("Your order has been placed successfully");
+        }
+      });
+    } else {
+      window.alert("Your basket is empty, nothing to checkout!")
+    }
   }
 
 }

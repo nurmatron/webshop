@@ -11,18 +11,19 @@ import {Category} from "../../models/category.enum";
 })
 export class EmployeePageComponent implements OnInit {
   searchArticleByName: string;
-  searchArticleByCategory: string;
+  searchArticleByCategory: string = "ALL";
   articleList: Article[] = [];
   articleListToDisplay: Article[] = [];
   orderList: Order[];
   orderListToDisplay: Order[];
   showCreateArticle: boolean;
   newArticleName: string ="";
-  newArticlePrice: number = 0;
+  newArticlePrice: number;
   newArticleCategory : Category = Category.Fruit;
   categoryOptions = Object.values(Category);
 
   constructor(private articleService: ArticleService) {
+    this.categoryOptions.push("ALL");
   }
 
   ngOnInit() {
@@ -43,8 +44,12 @@ export class EmployeePageComponent implements OnInit {
       article.name.toLowerCase().includes(this.searchArticleByName.toLocaleLowerCase()));
   }
   searchArticlesByCategory(){
-    this.articleListToDisplay = this.articleList.filter(article =>
-      article.category.toLowerCase().includes(this.searchArticleByCategory.toLocaleLowerCase()));
+    if(this.searchArticleByCategory.includes("ALL")) {
+      this.articleListToDisplay = this.articleList;
+    } else {
+      this.articleListToDisplay = this.articleList.filter(article =>
+        article.category.toLowerCase().includes(this.searchArticleByCategory.toLocaleLowerCase()));
+    }
   }
 
   createNewArticle() {
@@ -52,6 +57,8 @@ export class EmployeePageComponent implements OnInit {
       if (data != null) {
         console.log(this.newArticleCategory)
         this.populateArticleList();
+        this.newArticleName = "";
+        this.newArticlePrice = null;
       }
     });
     this.showCreateArticle = false;

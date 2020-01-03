@@ -1,24 +1,25 @@
-
-
-  <hr width="100%">
-  <h2>Previous orders : </h2>
-  <br>
-<table *ngFor="let order of orderList" >
+<hr width="100%">
+<h2>Previous orders : </h2>
+<br>
+<table *ngFor="let order of orderList">
   <thead>
-
   <tr>
     <th>Article</th>
     <th>Price</th>
+    <th>Category</th>
     <th>Quantity</th>
   </tr>
   </thead>
-  <tbody width="100%" >
+  <tbody width="100%">
   <tr *ngFor="let ol of order.orderLines">
     <td>
       {{ol.article.name}}
-  </td>
+    </td>
     <td>
       {{ol.article.price}}
+    </td>
+    <td>
+      {{ol.article.category}}
     </td>
     <td>
       {{ol.article.quantity}}

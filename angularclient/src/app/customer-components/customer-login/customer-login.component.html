@@ -1,19 +1,42 @@
-<form *ngIf="!loggedIn" (ngSubmit)="onSubmit()">
-  <label for="name">Name </label>
-  <input type="text" [(ngModel)]="customer.name"
-         id="name"
-         name="name"
-         placeholder="Enter your name"
-         required #name="ngModel">
-  <br><br>
-  <label for="password">Password </label>
-  <input type="text" [(ngModel)]="customer.password"
-         id="password"
-         name="password"
-         placeholder="Enter your password"
-         required #name="ngModel">
-  <button type="submit">Login in</button>
-</form>
+<p-dialog header="Sign up" [(visible)]="showCreateCustomer" modal="true" width="400" responsive="true">
+  <form>
+    <label for="newName">Name</label><br>
+    <input type="text" id="newName" name="newName" placeholder="Please enter your name" [(ngModel)]="newName">
+    <br>
+    <label for="newPassword">Passowrd</label><br>
+    <input type="text" id="newPassword" name="newPassword" placeholder="Please enter your password"
+           [(ngModel)]="newPassword">
+    <br>
+    <label for="newEmail">Email</label><br>
+    <input type="text" id="newEmail" name="newEmail" placeholder="Please enter your email" [(ngModel)]="newEmail">
+    <br>
+    <button type="submit" (click)="createCustomer()"
+            [disabled]="this.newName.length < 1 || this.newPassword.length < 1 || this.newEmail.length < 1">Sign up
+    </button>
+  </form>
+</p-dialog>
+<div *ngIf="!loggedIn">
+  <h2>Log in</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label for="name">Name </label>
+    <input type="text" [(ngModel)]="customer.name"
+           id="name"
+           name="name"
+           placeholder="Enter your name"
+           required #name="ngModel">
+    <br><br>
+    <label for="password">Password </label>
+    <input type="text" [(ngModel)]="customer.password"
+           id="password"
+           name="password"
+           placeholder="Enter your password"
+           required #name="ngModel">
+    <button type="submit">Login in</button>
+  </form>
+
+  <h3>Not a customer? Sign up here!</h3>
+  <button (click)="showCreateCustomer = true">Sign up</button>
+</div>
 <p style="color: red">{{failedLoginMessage}}</p>
 <app-customer-page
   *ngIf="loggedIn"
