@@ -1,10 +1,10 @@
 package com.example.webshop.services;
 
-import com.example.webshop.models.Article;
-import com.example.webshop.models.Customer;
-import com.example.webshop.models.Employee;
+import com.example.webshop.models.*;
 import com.example.webshop.repositories.ArticleRepository;
 import com.example.webshop.repositories.CustomerRepository;
+import com.example.webshop.repositories.OrderLineRepository;
+import com.example.webshop.repositories.OrderRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @SessionScope
@@ -21,10 +21,19 @@ public class CustomerService implements CrudService<Customer> {
     private boolean isLoggedin = false;
     private Customer customer;
 
-    @Autowired
     private CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
+    private OrderLineRepository orderLineRepository;
+    private OrderService orderService;
+
     @Autowired
-    private ArticleRepository articleRepository;
+    public void setRepositoriesAndServices(CustomerRepository customerRepository, OrderRepository orderRepository,
+                                           OrderLineRepository orderLineRepository, OrderService orderService) {
+        this.customerRepository = customerRepository;
+        this.orderRepository = orderRepository;
+        this.orderLineRepository = orderLineRepository;
+        this.orderService = orderService;
+    }
 
     @Override
     public Optional<Customer> create(Customer customer) {
@@ -73,8 +82,40 @@ public class CustomerService implements CrudService<Customer> {
         return isLoggedin;
     }
 
-    public List<Article> getAllArticles() {
-
-        return articleRepository.findAll();
+    public boolean checkout(Integer id, List<Article> basket) {
+        Optional<Customer> customerOptional = getOne(id);
+        AtomicBoolean everythingWentOkay = new AtomicBoolean(true);
+        // Borde ändra logiken till CustomerService...
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            Order customerOrder = new Order();
+            System.out.println(customer.getId() + " i am customer id");
+            customerOrder.setCustomer(customer);
+            Optional<Order> optionalOrder = Optional.of(orderRepository.saveAndFlush(customerOrder));
+            if (optionalOrder.isPresent()) {
+                basket.forEach(article -> {
+                    OrderLine orderLine = new OrderLine(article, customerOrder, article.getQuantity());
+                    //TODO   There is no check for orderline
+                    // CREATE ONE.
+                    Optional<OrderLine> optionalOrderLine = Optional.of(orderLineRepository.saveAndFlush(orderLine));
+                    if(optionalOrderLine.isPresent()){
+                        customerOrder.getOrderlines().add(orderLine);
+                    } else {
+                        everythingWentOkay.set(false);
+                    }
+                });
+                customer.getOrders().add(customerOrder);
+                Optional<Customer> updatedCustomer = update(id, customer);
+                if (updatedCustomer.isPresent()) {
+                    Optional<Order> updatedOrder = orderService.update(optionalOrder.get().getId(), customerOrder);
+                    if(updatedOrder.isPresent() && everythingWentOkay.get()) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
     }
+
 }

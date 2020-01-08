@@ -13,8 +13,12 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService implements CrudService<Employee> {
+    private EmployeeRepository employeeRepository;
+
     @Autowired
-    EmployeeRepository employeeRepository;
+    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
 
     @Override

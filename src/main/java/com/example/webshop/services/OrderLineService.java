@@ -12,14 +12,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderLineService implements CrudService<OrderLine> {
+    private OrderLineRepository orderLineRepository;
+
     @Autowired
-    OrderLineRepository orderLineRepository;
+    public void setOrderLineRepository(OrderLineRepository orderLineRepository) {
+        this.orderLineRepository = orderLineRepository;
+    }
 
 
     @Override
     public Optional<OrderLine> create(OrderLine orderLine) {
-        return Optional.of(orderLineRepository.save(orderLine));
-        // return Optional.of(orderLineRepository.saveAndFlush(orderLine));
+        return Optional.of(orderLineRepository.saveAndFlush(orderLine));
     }
 
     @Override

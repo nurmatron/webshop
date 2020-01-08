@@ -4,6 +4,7 @@ import com.example.webshop.models.Article;
 import com.example.webshop.models.Customer;
 import com.example.webshop.models.Order;
 import com.example.webshop.models.OrderLine;
+import com.example.webshop.services.ArticleService;
 import com.example.webshop.services.CustomerService;
 import com.example.webshop.services.OrderLineService;
 import com.example.webshop.services.OrderService;
@@ -80,35 +81,7 @@ public class CustomerController extends SuperController<Customer> {
     //create order from basket
     @PostMapping(path = "/checkout/{id}")
     public boolean checkout(@PathVariable Integer id, @RequestBody List<Article> basket) {
-        Optional<Customer> customerOptional = customerService.getOne(id);
-        // Borde ändra logiken till CustomerService...
-        if (customerOptional.isPresent()) {
-            Customer customer = customerOptional.get();
-            Order customerOrder = new Order();
-            System.out.println(customer.getId() + " i am customer id");
-            customerOrder.setCustomer(customer);
-            Optional<Order> optionalOrder = orderService.create(customerOrder);
-            if (optionalOrder.isPresent()) {
-                basket.forEach(article -> {
-                    OrderLine orderLine = new OrderLine(article, customerOrder, article.getQuantity());
-                    //TODO   There is no check for orderline
-                    // CREATE ONE.
-                    orderLineService.create(orderLine);
-                    customerOrder.getOrderlines().add(orderLine);
-                });
-                customer.getOrders().add(customerOrder);
-                Optional<Customer> updatedCustomer = customerService.update(id, customer);
-                if (updatedCustomer.isPresent()) {
-                    orderService.create(customerOrder);
-                    return true;
-                }
-                return false;
-            }
-        }
-        return false;
+        return customerService.checkout(id, basket);
     }
-
-    //see all articles
-
 
 }

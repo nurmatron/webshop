@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class ArticleService implements CrudService<Article> {
 
+    private ArticleRepository articleRepository;
+
     @Autowired
-    ArticleRepository articleRepository;
+    public void setArticleRepository(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
 
     @Override
     public Optional<Article> create(Article article) {

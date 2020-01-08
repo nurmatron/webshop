@@ -12,8 +12,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderService implements CrudService<Order> {
-    @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public Optional<Order> create(Order order) {
@@ -36,6 +40,7 @@ public class OrderService implements CrudService<Order> {
         BeanUtils.copyProperties(order, existingOrder, "id");
         return Optional.of(orderRepository.saveAndFlush(existingOrder));
     }
+
     public List<Order>getAllForCustomer(Integer id){
       List<Order> allOrderList =  orderRepository.findAll();
         System.out.println(allOrderList);
