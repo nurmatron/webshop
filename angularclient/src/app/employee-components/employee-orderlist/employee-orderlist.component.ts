@@ -23,9 +23,7 @@ export class EmployeeOrderlistComponent implements OnInit {
     this.unExpitadedOrderList  = [];
     this.orderService.getAllOrders().subscribe(data => {
       data.forEach(order => {
-        console.log("ortder : ", order)
         if (order.expedited == true) {
-          console.log(order.expedited, "i am expidated status")
           this.expitadedOrderList.push(order);
         } else {
           this.unExpitadedOrderList.push(order);
@@ -36,10 +34,8 @@ export class EmployeeOrderlistComponent implements OnInit {
   }
 
   expedite(id : number){
-    console.log("Iam happening from expedite");
     this.orderService.expediteOrder(id).subscribe(data=>{
       if (data != null){
-        console.log("Iam inside expidite if not null")
         this.populateOrderLists();
       }
     });

@@ -19,10 +19,8 @@ export class EmployeeLoginComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.id, this.password, this.loggedIn, this.failedLoginMessage);
   this.employeeService.login(this.id, this.password).subscribe(data=>{
     this.loggedIn = data;
-    console.log(data)
     if(this.loggedIn){
       this.failedLoginMessage ="";
     }

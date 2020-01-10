@@ -89,7 +89,6 @@ public class CustomerService implements CrudService<Customer> {
         if (customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
             Order customerOrder = new Order();
-            System.out.println(customer.getId() + " i am customer id");
             customerOrder.setCustomer(customer);
             Optional<Order> optionalOrder = Optional.of(orderRepository.saveAndFlush(customerOrder));
             if (optionalOrder.isPresent()) {

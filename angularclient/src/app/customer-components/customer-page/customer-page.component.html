@@ -1,10 +1,17 @@
-<h2>All the articles</h2>
-<input type="text" (input)="searchArticles()" [(ngModel)]="searchArticleByName" placeholder="Search articles">
-<select [(ngModel)]="searchArticleByCategory"
-        name="category" (ngModelChange)="searchArticlesByCategory()">
-  <option [ngValue]="cat" *ngFor="let cat  of categoryOptions">{{cat}}</option>
-</select>
-<table>
+<!-- Lägg till header, shopping list och prev orders..
+Lyssna på loaded feature och visa antingen div med lista eller prev orders baserat på vad den laddas med. -->
+<app-header (featureSelected)="pageToShow = $event"></app-header>
+<div *ngIf="pageToShow === 'shopping-list' && (!orderPlaced && !orderPlacedSuccessfully)">
+  <h2>All the articles</h2>
+  <label for="articleCategory">Search Category</label>
+  <br>
+  <select [(ngModel)]="searchArticleByCategory"
+          name="category" id="articleCategory" (ngModelChange)="searchArticlesByCategory()">
+    <option [ngValue]="cat" *ngFor="let cat  of categoryOptions">{{cat}}</option>
+  </select>
+  <br>
+  <input type="text" (input)="searchArticles()" [(ngModel)]="searchArticleByName" placeholder="Search articles">
+  <table>
     <thead>
     <tr>
       <th>Article</th>
@@ -25,39 +32,43 @@
       <button (click)="addToBasket(article)" [disabled]="orderPlacedSuccessfully">Add to basket</button>
     </tr>
     </tbody>
-</table>
-<hr>
-<div *ngIf="!orderPlacedSuccessfully">
-<h2>Your basket</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Article</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Remove from basket</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let article of customer.basket">
-    <td>{{article.name}}</td>
-    <td>{{article.price}}</td>
-    <button [disabled]="article.quantity < 1" (click)="subBasketQuantity(article)">-</button>
-    <td>{{article.quantity}}</td>
-    <button (click)="addBasketQuantity(article)">+</button>
-    <button (click)="removeFromBasket(article)">Remove</button>
-  </tr>
-  </tbody>
-</table>
-<h3>Total price: {{basketPrice}}</h3>
+  </table>
+  <hr>
+  <div *ngIf="!orderPlacedSuccessfully">
+    <h2>Your basket</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Article</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Remove from basket</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let article of customer.basket">
+        <td>{{article.name}}</td>
+        <td>{{article.price}}</td>
+        <button [disabled]="article.quantity < 1" (click)="subBasketQuantity(article)">-</button>
+        <td>{{article.quantity}}</td>
+        <button (click)="addBasketQuantity(article)">+</button>
+        <button (click)="removeFromBasket(article)">Remove</button>
+      </tr>
+      </tbody>
+    </table>
+    <h3>Total price: {{basketPrice}}</h3>
+  </div>
+  <button (click)="placeOrder()" [disabled]="orderPlacedSuccessfully">Checkout</button>
+  <p *ngIf="!orderPlacedSuccessfully && orderPlaced" style="color: red">Something went wrong with your checkout</p>
 </div>
-<button (click)="placeOrder()" [disabled]="orderPlacedSuccessfully">Checkout</button>
-<p *ngIf="!orderPlacedSuccessfully && orderPlaced" style="color: red">Something went wrong with your checkout</p>
+
 <app-order-summary
   [basket]="customer.basket"
   [basketPrice]="basketPrice"
-  *ngIf="orderPlaced && orderPlacedSuccessfully">
+  *ngIf="pageToShow === 'shopping-list' && (orderPlaced && orderPlacedSuccessfully)">
 </app-order-summary>
 
-<app-previous-orders [customer]="customer">
+<app-previous-orders
+  *ngIf="pageToShow === 'previous-orders'"
+  [customer]="customer">
 </app-previous-orders>

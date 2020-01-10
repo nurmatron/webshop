@@ -31,11 +31,17 @@
 
 
 <h2>All the articles</h2>
-<input type="text" (input)="searchArticlesByName()" [(ngModel)]="searchArticleByName" placeholder="Search articles by name">
+<label for="articleCategory">Search Category</label>
+<br>
 <select [(ngModel)]="searchArticleByCategory"
-        name="category" (ngModelChange)="searchArticlesByCategory()">
+        name="category"
+        id="articleCategory"
+        (ngModelChange)="searchArticlesByCategory()">
   <option [ngValue]="cat" *ngFor="let cat  of categoryOptions">{{cat}}</option>
 </select>
+<br>
+<input type="text" (input)="searchArticlesByName()" [(ngModel)]="searchArticleByName" placeholder="Search articles by name">
+
 <button (click)="showCreateArticle = true"> create article</button>
 <table>
   <thead>

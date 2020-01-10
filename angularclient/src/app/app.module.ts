@@ -18,6 +18,7 @@ import {ArticleService} from "./services/article.service";
 import {DialogModule} from "primeng";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeOrderlistComponent } from './employee-components/employee-orderlist/employee-orderlist.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { EmployeeOrderlistComponent } from './employee-components/employee-order
     EmployeeLoginComponent,
     EmployeePageComponent,
     EmployeeOrderlistComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

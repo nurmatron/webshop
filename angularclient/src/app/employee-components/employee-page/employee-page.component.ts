@@ -55,7 +55,6 @@ export class EmployeePageComponent implements OnInit {
   createNewArticle() {
     this.articleService.createArticle(this.newArticleCategory,this.newArticleName, this.newArticlePrice).subscribe(data => {
       if (data != null) {
-        console.log(this.newArticleCategory)
         this.populateArticleList();
         this.newArticleName = "";
         this.newArticlePrice = null;
@@ -68,7 +67,6 @@ export class EmployeePageComponent implements OnInit {
     let confirmRemove = confirm("Are you sure you want to delete " + article.name + "from database?");
     if (confirmRemove) {
       this.articleService.deleteArticle(article.id).subscribe(data => {
-        console.log(data , " i am data from delete")
 
         if (data.status == 200) {
           window.alert("Article has been removed.");

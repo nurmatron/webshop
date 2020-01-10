@@ -5,14 +5,12 @@
   <thead>
   <tr>
     <th>Order</th>
-    <th>View order</th>
     <th>Expidite</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let order of unExpitadedOrderList">
     <td>{{order.id}}</td>
-    <td> <button>Open</button></td>
     <td><button (click)="expedite(order.id)">O</button></td>
   </tr>
   </tbody>
@@ -24,13 +22,11 @@
    <thead>
    <tr>
      <th>Order</th>
-     <th>View order</th>
    </tr>
    </thead>
    <tbody>
    <tr *ngFor="let order of expitadedOrderList">
      <td>{{order.id}}</td>
-     <td> <button>Open</button></td>
 
    </tr>
    </tbody>

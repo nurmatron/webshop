@@ -24,7 +24,6 @@ export class PreviousOrdersComponent implements OnInit {
       data.forEach(order => { // för varje order id
         this.populateOrderAndPushToOrderList(order);
       });
-      console.log(data, "")
     })
   }
 
@@ -33,22 +32,15 @@ export class PreviousOrdersComponent implements OnInit {
       let orderLines = [];
       this.orderService.getAllOrderLines(order.id).subscribe(data => {
         orderLines = data;
-        console.log(orderLines, " i am orderlines");
         for (let i = 0; i < orderLines.length; i++) {
           this.orderService.getArticleForOrderLine(orderLines[i].id).subscribe(data => {
             orderLines[i].article = data;
-            console.log("i am data after article", orderLines[i])
           })
         }
         order.orderLines = orderLines;
-        console.log("i am order.orderlines", order)
         this.orderList.push(order);
-        console.log(this.orderList, " after push ")
 
       });
-
-      //  this.orderList.push(orderData);
-      console.log(orderData, " i am order data")
     })
   }
 

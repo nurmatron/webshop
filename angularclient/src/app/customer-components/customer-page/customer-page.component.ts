@@ -22,6 +22,7 @@ export class CustomerPageComponent implements OnInit {
   orderPlacedSuccessfully: boolean;
   orderPlaced: boolean;
   categoryOptions = Object.values(Category);
+  pageToShow: string = 'shopping-list';
 
   constructor(private customerService:CustomerService, private articleService : ArticleService) {
     this.categoryOptions.push("ALL");
